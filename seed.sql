@@ -19,7 +19,7 @@ INSERT INTO employee(first_name,last_name,job_id,manager_id)
 VALUES  ("Meredith","Grey",100,3),
         ("Caliope","Torres",200,4),
         ("Derek","Shepherd",500,4),
-        ("Richard","Webber",600,0),
+        ("Richard","Webber",600,Null),
         ("Teddy","Altman",400,4),
         ("April","Kepner",300,5),
         ("Cristina","Yang",100,5),
