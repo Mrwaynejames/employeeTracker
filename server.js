@@ -51,20 +51,26 @@ function initialPrompt () {
 }
 
 function viewDepartments() {
-db.query('SELECT * FROM department',) {
+db.query('SELECT * FROM department',); {
     console.log("Departments");
+    if(err) {throw(err)}
+    initialPrompt();
 }
 };
 
 function viewRoles() {
-    db.query('SELECT * FROM job',) {
+    db.query('SELECT * FROM job',); {
         console.log("Roles");
+        if(err) {throw(err)}
+        initialPrompt();
     }
     };
 
-function viewEepartments() {
-    db.query('SELECT * FROM employee',) {
+function viewEmployees() {
+    db.query('SELECT * FROM employee',); {
         console.log("Employees");
+        if(err) {throw(err)}
+        initialPrompt();
     }
     };  
 function addDepartment() {
@@ -75,7 +81,8 @@ function addDepartment() {
             message: 'What department would you like to add?',
             name: 'dpt'
         },
-        )
+        //not exactly but close
+        ).then(answers);{db.query('add answers.dpt INSERT INTO department')}
 };
 function addRole() {
     inquirer
@@ -87,8 +94,9 @@ function addRole() {
             },
             {
                 type: 'number',
-                message
+                message: 'What is the salary?',
+                name: 'salary'
+            },
 
-            }
         )
 }
