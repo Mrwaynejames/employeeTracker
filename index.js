@@ -108,15 +108,59 @@ function addRole() {
         ])
         .then(answers => {const params = [answers.role, answers.salary]});
 
+        const departments = data.map(({ name, id }) => ({ name: name, value: id }));
+
     inquirer
         .prompt ([
             {
                 type: 'list',
                 message: 'What department to add this to?',
-                name: 'addDept'
+                name: 'addDept',
+                choices: departments
             }
         ])
         .then(answers => {db.query,('INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)', answers.role, answers.salary, answers.addDept)});
 
+        viewRoles();
+
+};
+
+function addEmployee() {
+    inquirer
+        .prompt ([
+            {
+                type: 'Input',
+                message: ' First name of Employee?',
+                name: 'f_name'
+            },
+            {
+                type: 'Input',
+                message: 'Last name of Employee?',
+                name: 'l_name'
+            },
+        ])
+        //how can I add a inquirer list from the roles I currently have
+};
+
+function updateRole() {
+
+    const empList = data.map(({ id, first_name, last_name }) => ({ name: first_name + " "+ last_name, value: id }));
+
+    const newRole = data.map(({ id, title }) => ({ name: title, value: id }));
+
+    inquirer
+        .prompt ([
+            {
+                type: 'list',
+                message: 'What employee would you like to update?',
+                name: empList
+            },
+            {
+                type: 'list',
+                message: 'What is their new role?',
+                name: newRole
+            }
+        ])
 }
+
 initialPrompt();
