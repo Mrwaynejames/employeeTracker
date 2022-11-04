@@ -5,6 +5,7 @@ const mysql = require('mysql2');
 const db = mysql.createConnection(
   {host:'localhost', user: 'root', database: 'employees_db', password: 'password'}
 );
+const console = require('console');
 
 function initialPrompt () {
     inquirer.prompt([{
@@ -50,24 +51,28 @@ function initialPrompt () {
 }
 
 function viewDepartments() {
-db.query('SELECT * FROM departments'); {
     console.log("Departments");
+db.query('SELECT * FROM department.id AS id, department.name AS department FROM department'); {
+    console.table(rows);
     initialPrompt();
 }
 };
 
 function viewRoles() {
+    console.log("Roles");
     db.query('SELECT role.id,role.title, department.name, role.salary FROM roles LEFT JOIN department ON roles.department_id = department.id',); {
-        console.log("Roles");
-        if(err) {throw(err)}
+        console.table(rows);
         initialPrompt();
     }
     };
 
 function viewEmployees() {
-    db.query('SELECT * FROM employees',); {
-        console.log("Employees");
-        if(err) {throw(err)}
+    console.log("Employees");
+    db.query(`SELECT employees.id, employees.first_name, employees.last_name, roles.title,departments.name AS department,roles.salary, FROM employees
+        LEFT JOIN roles ON employees.role_id = role.id
+        LEFT JOIN departments ON roles.department_id = department.id
+        LEFT JOIN employees manager ON employees.manager_id = manager.id`,); {
+        console.table(rows);
         initialPrompt();
     }
     };  
@@ -79,8 +84,8 @@ function addDepartment() {
             message: 'What department would you like to add?',
             name: 'dpt'
         },
-    ]).then((answers) => {db.query,('INSERT INTO departments SET ?', answers)});
-    if(err) {throw(err)}
+    ]).then((answers) => {db.query,('INSERT INTO departments (dep_name) VALUES (?)', answers)});
+    console.table(rows);
 
     viewDepartments();
 
@@ -111,8 +116,7 @@ function addRole() {
                 name: 'addDept'
             }
         ])
-        .then(roleDept => {db.query,('INSERT INTO roles (title, salary, department_id) VALUES (answers.role, answers.salary,')}) 
+        .then(answers => {db.query,('INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)', answers.role, answers.salary, answers.addDept)});
 
 }
-
 initialPrompt();

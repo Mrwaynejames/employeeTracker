@@ -18,9 +18,7 @@ VALUES  ("Surgical Intern",60000,3),
 INSERT INTO employees(first_name,last_name,role_id,manager_id)
 VALUES  ("Meredith","Grey",1,3),
         ("Caliope","Torres",2,4),
-        ("Derek","Shepherd",5,Null),
         ("Richard","Webber",6,Null),
         ("Teddy","Altman",4,Null),
         ("April","Kepner",3,5),
-        ("Cristina","Yang",1,Null),
         ("Mark","Sloan",5,Null);
