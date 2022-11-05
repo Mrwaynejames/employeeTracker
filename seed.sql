@@ -17,9 +17,10 @@ VALUES  ("Surgical Intern",60000,3),
         ("Chief of Surgery",600000,1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES  ("Meredith", "Grey", 1, 3),
+VALUES  ("Richard", "Webber", 6, NULL),
+        ("Derek", "Shepherd", 5, 1),
+        ("Mark", "Sloan", 5, 1),
+        ("Teddy", "Altman", 4, 1),
+        ("April", "Kepner", 3, 4),
         ("Caliope", "Torres", 2, 4),
-        ("Richard", "Webber", 6, 5),
-        ("Teddy", "Altman", 4, 6),
-        ("April", "Kepner", 3, 5),
-        ("Mark", "Sloan", 5, 6);
+        ("Meredith", "Grey", 1, 2);

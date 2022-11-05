@@ -52,7 +52,7 @@ function initialPrompt () {
 
 function viewDepartments() {
     console.log("Departments");
-db.query('SELECT * FROM department.id AS id, department.name AS department FROM department'); {
+db.query('SELECT department.id AS id, department.name AS department FROM department'); {
     console.table(rows);
     initialPrompt();
 }
@@ -60,7 +60,7 @@ db.query('SELECT * FROM department.id AS id, department.name AS department FROM 
 
 function viewRoles() {
     console.log("Roles");
-    db.query('SELECT role.id,role.title, department.name, role.salary FROM roles LEFT JOIN department ON roles.department_id = department.id',); {
+    db.query('SELECT role.id,role.title, department.name AS department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id',); {
         console.table(rows);
         initialPrompt();
     }
@@ -68,10 +68,10 @@ function viewRoles() {
 
 function viewEmployees() {
     console.log("Employees");
-    db.query(`SELECT employees.id, employees.first_name, employees.last_name, roles.title,departments.name AS department,roles.salary, FROM employees
-        LEFT JOIN roles ON employees.role_id = role.id
-        LEFT JOIN departments ON roles.department_id = department.id
-        LEFT JOIN employees manager ON employees.manager_id = manager.id`,); {
+    db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title,department.name AS department, role.salary, FROM employee
+        LEFT JOIN role ON employee.role_id = role.id
+        LEFT JOIN department ON role.department_id = department.id
+        LEFT JOIN employee ON employee.manager_id = manager.id`,); {
         console.table(rows);
         initialPrompt();
     }
@@ -84,8 +84,7 @@ function addDepartment() {
             message: 'What department would you like to add?',
             name: 'dpt'
         },
-    ]).then((answers) => {db.query,('INSERT INTO departments (dep_name) VALUES (?)', answers)});
-    console.table(rows);
+    ]).then((answers) => {db.query,('INSERT INTO department (name) VALUES (?)', answers)});
 
     viewDepartments();
 
@@ -108,6 +107,7 @@ function addRole() {
         ])
         .then(answers => {const params = [answers.role, answers.salary]});
 
+        const dept = data.map(({ name, id }) => ({ name: name, value: id }));
     inquirer
         .prompt ([
             {
