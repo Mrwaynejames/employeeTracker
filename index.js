@@ -1,9 +1,7 @@
 const inquirer = require("inquirer");
-// get the client
 const mysql = require('mysql2');
-// create the connection
 const db = mysql.createConnection(
-  {host:'localhost', user: 'root', database: 'employees_db', password: 'password'}
+  {host:'localhost', user: 'root', database: 'employee_db', password: 'password'}
 );
 const console = require('console');
 
@@ -51,30 +49,40 @@ function initialPrompt () {
 }
 
 function viewDepartments() {
-    console.log("Departments");
-db.query('SELECT department.id AS id, department.name AS department FROM department'); {
-    console.table(rows);
+    console.log("Here are all the departments");
+    const query = `SELECT department.id AS id, department.name AS department FROM department`; 
+
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
     initialPrompt();
-}
+});
 };
 
 function viewRoles() {
-    console.log("Roles");
-    db.query('SELECT role.id,role.title, department.name AS department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id',); {
-        console.table(rows);
+    console.log("Here are all the roles");
+    query = 'SELECT role.id,role.title, department.name AS department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id';
+    db.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
         initialPrompt();
-    }
+    });
     };
 
 function viewEmployees() {
-    console.log("Employees");
-    db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title,department.name AS department, role.salary, FROM employee
+    console.log("Here are all the employees");
+    query = `SELECT employee.id AS id, employee.first_name AS firstName, employee.last_name AS lastName,
+        role.title AS role,department.name AS department, role.salary AS salary, 
+        CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee
         LEFT JOIN role ON employee.role_id = role.id
         LEFT JOIN department ON role.department_id = department.id
-        LEFT JOIN employee ON employee.manager_id = manager.id`,); {
-        console.table(rows);
+        LEFT JOIN employee ON employee.manager_id = manager.id`;
+
+        db.query(query, (err, res) => {
+            if (err) throw err;
+            console.table(res);
         initialPrompt();
-    }
+    });
     };  
 function addDepartment() {
     inquirer
@@ -105,9 +113,9 @@ function addRole() {
             },
 
         ])
-        .then(answers => {const params = [answers.role, answers.salary]});
+        .then(answers => {const params = [answers.role, answers.salary]
 
-        const dept = data.map(({ name, id }) => ({ name: name, value: id }));
+        const departments = data.map(({ name, id }) => ({ name: name, value: id }));
     inquirer
         .prompt ([
             {
@@ -117,9 +125,13 @@ function addRole() {
                 choices: departments
             }
         ])
-        .then(answers => {db.query,('INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)', answers.role, answers.salary, answers.addDept)});
+        .then(departmentChoice => {params.push(departmentChoice.departments);
+            
+            db.query,('INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)', answers.role, answers.salary, departmentChoice.addDept);
 
         viewRoles();
+    })
+})
 
 };
 
@@ -137,8 +149,28 @@ function addEmployee() {
                 name: 'l_name'
             },
         ])
-        //how can I add a inquirer list from the roles I currently have
+        .then(answers => {const params = [answers.f_name, answers.l_name]
+        
+        const roles = data.map(({id, title}) => ({ name: title, value: id}));
+    
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'role',
+                message: 'Choose employee role',
+                choices: roles
+            }
+        ])
+    .then(roleChoice => {params.push(roleChoice.roles);
+
+        const managers = data.map(({ id, first_name, last_name }) => ({ name: first_name + " "+ last_name, value: id }));
+
+    })})
+        
 };
+
+
 
 function updateRole() {
 
@@ -158,3 +190,4 @@ function updateRole() {
 }
 
 initialPrompt();
+
