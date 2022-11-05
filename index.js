@@ -108,8 +108,6 @@ function addRole() {
         ])
         .then(answers => {const params = [answers.role, answers.salary]});
 
-        const departments = data.map(({ name, id }) => ({ name: name, value: id }));
-
     inquirer
         .prompt ([
             {
@@ -143,10 +141,6 @@ function addEmployee() {
 };
 
 function updateRole() {
-
-    const empList = data.map(({ id, first_name, last_name }) => ({ name: first_name + " "+ last_name, value: id }));
-
-    const newRole = data.map(({ id, title }) => ({ name: title, value: id }));
 
     inquirer
         .prompt ([
