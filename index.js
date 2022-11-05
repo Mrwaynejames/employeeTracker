@@ -158,21 +158,15 @@ function addEmployee() {
         const rList = [];
         res.forEach(({ title, id }) => {
           rList.push({name: title, value: id});
-          });
         });
 
         db.query("SELECT * FROM EMPLOYEE", (err, eRes) => {
         if (err) throw err;
         const mList = [
-        // {
-        //     name: 'None',
-        //     value: 0
-        // }
+        
         ];
-         //an employee could have no manager
         eRes.forEach(({ first_name, last_name, id }) => {
         mList.push({name: first_name + " " + last_name,value: id});
-        });
         });
 
     inquirer
@@ -206,26 +200,61 @@ function addEmployee() {
                 console.log("Employee Added");
                 viewEmployees();
                 initialPrompt();
+                })
+            })
         })
     })
 };
 
 function updateRole() {
-
-    inquirer
-        .prompt ([
+    //get all the employee list to make choice of employee
+    db.query("SELECT * FROM EMPLOYEE", (err, res) => {
+        if (err) throw err;
+        const eList = [];
+        res.forEach(({ first_name, last_name, id }) => {
+          employeeChoice.push({name: first_name + " " + last_name, value: id});
+        });
+        
+        //get all the role list to make choice of employee's role
+        db.query("SELECT * FROM ROLE", (err, rRes) => {
+          if (err) throw err;
+          const rList = [];
+          rRes.forEach(({ title, id }) => {
+            rList.push({name: title, value: id});
+            });
+         
+          inquirer
+            .prompt ([
             {
-                type: 'list',
-                message: 'What employee would you like to update?',
-                name: empList
+              type: "list",
+              name: "employees",
+              message: "whose role do you want to update?",
+              choices: eList
             },
             {
-                type: 'list',
-                message: 'What is their new role?',
-                name: newRole
+              type: "list",
+              name: "roles",
+              message: "what is the employee's new role?",
+              choices: rList
             }
-        ])
-}
+          ])
+            .then(answers => {
+              const query = `UPDATE EMPLOYEE SET ? WHERE ?? = ?;`;
+              connection.query(query, [
+                {role_id: answers.role_id},
+                "id",
+                answers.id
+              ], (err, res) => {
+                if (err) throw err;
+                
+                console.log("Employee's role updated");
+                viewEmployees();
+                initialPrompt();
+              });
+            })
+          })
+      });
+};
 
 initialPrompt();
 
