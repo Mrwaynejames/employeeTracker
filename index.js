@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 const db = mysql.createConnection(
   {host:'localhost', user: 'root', database: 'employee_db', password: 'password'}
 );
-const console = require('console');
 
 function initialPrompt () {
     inquirer.prompt([{
@@ -42,8 +41,6 @@ function initialPrompt () {
                     break
                 case 'Update an employee role':
                     updateRole();
-                case 'I am done':
-                    finished();
         
         }})
 }
@@ -96,7 +93,7 @@ function addDepartment() {
     ]).then((answers) => {query = 'INSERT INTO department (name) VALUES (?)';
         db.query(query, [answers.dpt], (err, res) => {
         if (err) throw err;
-        console.log('Department Added')
+        console.log('Departments')
     viewDepartments();
     initialPrompt();
         
@@ -142,9 +139,9 @@ function addRole() {
         .then(answers => {const query = `INSERT INTO ROLE (title, salary, department_id) VALUES (?)`;
             db.query(query, [[answers.role, answers.salary, answers.addDept]], (err, res) => {
                 if (err) throw err;
-                console.log('Role added');
-                viewRoles();
-                initialPrompt();
+                console.log('Roles');
+            viewRoles();
+            initialPrompt();
             })
 })
 
@@ -198,12 +195,12 @@ function addEmployee() {
             db.query(query, [[answers.f_name, answers.l_name, answers.role, answers.manager]], (err, res) => {
                 if(err) throw err;
                 console.log("Employee Added");
-                viewEmployees();
-                initialPrompt();
+            viewEmployees();
+            initialPrompt();
                 })
             })
         })
-    })
+    });
 };
 
 function updateRole() {
@@ -212,7 +209,7 @@ function updateRole() {
         if (err) throw err;
         const eList = [];
         res.forEach(({ first_name, last_name, id }) => {
-          employeeChoice.push({name: first_name + " " + last_name, value: id});
+          eList.push({name: first_name + " " + last_name, value: id});
         });
         
         //get all the role list to make choice of employee's role
@@ -240,7 +237,7 @@ function updateRole() {
           ])
             .then(answers => {
               const query = `UPDATE EMPLOYEE SET ? WHERE ?? = ?;`;
-              connection.query(query, [
+              db.query(query, [
                 {role_id: answers.role_id},
                 "id",
                 answers.id
@@ -248,7 +245,7 @@ function updateRole() {
                 if (err) throw err;
                 
                 console.log("Employee's role updated");
-                viewEmployees();
+                viewRoles();
                 initialPrompt();
               });
             })
