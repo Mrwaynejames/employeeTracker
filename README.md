@@ -8,7 +8,13 @@ Companies large or small have employees. Keep track on an entire staff can be di
 ## Usage
 To use this program type "node index.js" into your terminal to start the program. From there just answer the prompts according to your needs. When you have completed your task you will be shown a table that reflects what you've done and takes you back to the begining prompts.
 
-https://drive.google.com/file/d/1DAuhr2aBgdV8CfbJ9GF6KqXctJ4Ge8eL/view
+https://drive.google.com/file/d/1VktE1F4Hx2UPuRPDztDXt1wwXTc8kZCQ/view
+
+## Features
+
+This progrma makes it simple to track your employees by having prompts to answer. Many of the prompts include a drop down list for the users conveneince.
+
+
 
 ## License
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)

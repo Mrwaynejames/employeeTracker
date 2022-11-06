@@ -137,8 +137,8 @@ function addRole() {
             
 
         ])
-        .then(answers => {const query = `INSERT INTO ROLE (title, salary, department_id) VALUES (?)`;
-            db.query(query, [[answers.role, answers.salary, answers.addDept]], (err, res) => {
+        .then(choice => {const query = `INSERT INTO ROLE (title, salary, department_id) VALUES (?)`;
+            db.query(query, [[choice.role, choice.salary, choice.addDept]], (err, res) => {
                 if (err) throw err;
                 console.log('Roles');
             viewRoles();
@@ -159,9 +159,7 @@ function addEmployee() {
 
         db.query("SELECT * FROM EMPLOYEE", (err, eRes) => {
         if (err) throw err;
-        const mList = [
-        
-        ];
+        const mList = [];
         eRes.forEach(({ first_name, last_name, id }) => {
         mList.push({name: first_name + " " + last_name,value: id});
         });
@@ -169,12 +167,12 @@ function addEmployee() {
     inquirer
         .prompt ([
             {
-                type: 'Input',
+                type: 'input',
                 message: ' First name of Employee?',
                 name: 'f_name'
             },
             {
-                type: 'Input',
+                type: 'input',
                 message: 'Last name of Employee?',
                 name: 'l_name'
             },
@@ -191,8 +189,8 @@ function addEmployee() {
                 choices: mList
             }
         ])
-        .then(answers => { const query = `INSERT INTO EMPLOYEE (first_name, last_name, role_id, manager_id) VALUES (?)`;
-            db.query(query, [[answers.f_name, answers.l_name, answers.role, answers.manager]], (err, res) => {
+        .then(response => { const query = `INSERT INTO EMPLOYEE (first_name, last_name, role_id, manager_id) VALUES (?)`;
+            db.query(query, [[response.f_name, response.l_name, response.role, response.manager]], (err, res) => {
                 if(err) throw err;
                 console.log("Employee Added");
             viewEmployees();
