@@ -43,9 +43,9 @@ function initialPrompt () {
                     updateRole();
         
         }})
-}
+};
 
-function viewDepartments() {
+function viewDepartments() { 
     console.log("Here are all the departments");
     const query = `SELECT department.id AS id, department.name AS department FROM department`; 
 

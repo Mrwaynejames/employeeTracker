@@ -3,10 +3,10 @@
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)
 
 ## Description 
-Keeping track of your tasks on a daily basis can be hard thats why there are so many workflow sites like notion or Monday. This program allows the user to have their own note taking app and for it to display the notes for them to make staying on track easy. While making this program you develop a good understanding of the routes you have seen your whole life in the URL of your website and how each character or word in that URL is carry code with them.
+Companies large or small have employees. Keep track on an entire staff can be difficult. This program allows the user to see how many employees there are, what department, what role, their salary. If there is an postion change you can easily select the employee and their new role from a drop down list. 
 
 ## Usage
-To effectively use this site all you have to do is click the get started button the enter a topic for your list and then fill out your list pressing enter anytime you want to drop down a line. When you are finished press the save icon in the top right and your notes will show up on the left side of the screen.
+To use this program type "node index.js" into your terminal to start the program. From there just answer the prompts according to your needs. When you have completed your task you will be shown a table that reflects what you've done and takes you back to the begining prompts.
 
 https://drive.google.com/file/d/1DAuhr2aBgdV8CfbJ9GF6KqXctJ4Ge8eL/view
 
