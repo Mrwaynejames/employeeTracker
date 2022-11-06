@@ -104,6 +104,7 @@ function addDepartment() {
 function addRole() {
     //getting the department table to make it into the choices in the list
     const departments = [];
+    //try {
   db.query("SELECT department.id, department.name FROM DEPARTMENT", (err, res) => {
     if (err) throw err;
 
@@ -144,7 +145,6 @@ function addRole() {
             initialPrompt();
             })
 })
-
 });
 };
 
